@@ -26,9 +26,10 @@ public class Client {
         String raw_text = GetRawText();
         PriorityQueue priorityQueue = new PriorityQueue();
         AddWords(raw_text,priorityQueue);
-        priorityQueue.setSort();
+        //priorityQueue.setSort();
         boolean isExit = false;
         while(!isExit){
+            System.out.print("*");
             String k = priorityQueue.delete();
             if(priorityQueue.isLong(k))
                 System.out.println(k);
