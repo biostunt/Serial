@@ -29,7 +29,6 @@ public class Client {
         //priorityQueue.setSort();
         boolean isExit = false;
         while(!isExit){
-            System.out.print("*");
             String k = priorityQueue.delete();
             if(priorityQueue.isLong(k))
                 System.out.println(k);
