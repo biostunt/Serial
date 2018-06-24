@@ -17,6 +17,7 @@ public class RBT <Key extends Comparable<Key>, Value> {
             this.N=N;
             this.color=color;
         }
+        public String toString(){ return "" + this.val;}
     }
     private Node root;
     public int size() {return size(root); }
