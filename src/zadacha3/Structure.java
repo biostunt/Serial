@@ -14,7 +14,7 @@ public class Structure {
         String Alphabet =
                 "qwertyuiopasdfghjklzxcvbnm" +
                         "йцукенгшщзфывапролдячсмить";
-        String uniqChars = "!@#$%^&_/?><,.";
+        String uniqChars = "!@#$%^&_/?><,";
         String[] temp = exp.split("");
         for(String s: temp){
             if(Alphabet.contains(s) ||
@@ -30,7 +30,7 @@ public class Structure {
         for(String s : exp.split(""))
             if(s != " ") word+=s;
         String[] temp = word.split("");
-        String chars = "+=-\\*";
+        String chars = "+=-\\*.";
         for(int i = 2;i < temp.length;i++){
             if(chars.contains(temp[i]))
                 if(temp[i] == temp[i-2] && temp[i] == temp[i-1] && temp[i-1] == temp[i-2]){
