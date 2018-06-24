@@ -1,44 +1,53 @@
 package zadacha6;
 
+import java.math.BigInteger;
+import java.util.Random;
 public class RabinKarp {
-    private int M,R = 256;
-    private int Q = 104729;
     private String pat;
-    private long patHash,RM;
-
-    private long hash(String key, int M){
+    private long patHash;
+    private int m;
+    private long q;
+    private int R;
+    private long RM;
+    public RabinKarp(String pat) {
+        this.pat = pat;
+        R = 256;
+        m = pat.length();
+        q = longRandomPrime();
+        RM = 1;
+        for (int i = 1; i <= m - 1; i++)
+            RM = (R * RM) % q;
+        patHash = hash(pat, m);
+    }
+    private long hash(String key, int m) {
         long h = 0;
-        for (int i = 0; i < M; i++) {
-            h = (R*h + key.charAt(i) % Q);
-        }
+        for (int j = 0; j < m; j++)
+            h = (R * h + key.charAt(j)) % q;
         return h;
     }
-    public RabinKarp(String pat){
-        this.pat = pat;
-        this.M = pat.length();
-        RM = 1;
-        for (int i = 0; i <= M -1 ; i++) {
-            RM = (R * RM) % Q;
-        }
-        patHash = hash(pat, M);
+    private boolean check(String txt, int i) {
+        for (int j = 0; j < m; j++)
+            if (pat.charAt(j) != txt.charAt(i + j))
+                return false;
+        return true;
     }
-    private boolean check(int i){ return true;}
-    public int search(String txt){
-        int N = txt.length();
-        long txtHash = hash(txt, M);
-        if( patHash == txtHash) return 0;
-        for (int i = M; i < N; i++) {
-            txtHash
-                     = (txtHash+ Q - RM*txt.charAt(i-M) % Q) % Q;
-            txtHash
-                    = (txtHash * R + txt.charAt(i)) % Q;
-            if(patHash == txtHash)
-                if (check(i-M+1))
-                    return i-M+1;
+    public int search(String txt) {
+        int n = txt.length();
+        if (n < m) return n;
+        long txtHash = hash(txt, m);
+        if ((patHash == txtHash) && check(txt, 0))
+            return 0;
+        for (int i = m; i < n; i++) {
+            txtHash = (txtHash + q - RM * txt.charAt(i - m) % q) % q;
+            txtHash = (txtHash * R + txt.charAt(i)) % q;
+            int offset = i - m + 1;
+            if ((patHash == txtHash) && check(txt, offset))
+                return offset;
         }
-        return N;
+        return n;
     }
-
-
-
+    private static long longRandomPrime() {
+        BigInteger prime = BigInteger.probablePrime(31, new Random());
+        return prime.longValue();
+    }
 }
